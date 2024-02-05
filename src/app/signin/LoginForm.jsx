@@ -18,7 +18,9 @@ function LoginForm() {
       email: signIn.email,
       password: signIn.password,
     });
-    if (response.data !== "success") {
+    setLoading(false);
+    console.log(response);
+    if (response.data === "Email does not exist") {
       setError("Email or password is wrong");
       setLoading(false);
     } else {
@@ -48,7 +50,7 @@ function LoginForm() {
         className="input input-bordered w-full bg-gray-100"
       />
       {error && <h1 className="text-red-400">{error}</h1>}
-      <Button label={"Log in"} handleClick={handleClick} disabled={loading}/>
+      <Button label={"Log in"} handleClick={handleClick} disabled={loading} />
     </form>
   );
 }

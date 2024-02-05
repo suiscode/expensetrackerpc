@@ -1,14 +1,34 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import React from "react";
+import { usePathname, useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
+import AddRecord from "./addrecords/AddRecord";
+import { useGlobalContext } from "@/app/context/Context";
+import axios from "axios";
 
 function Header() {
+
+  const router = useRouter()
+  const {setRecordState, recordState,user,setUser} = useGlobalContext()
+  const [loading,setLoading] = useState(true)
   const params = usePathname();
-  console.log(params);
+  const logOut = async ()=>{
+    const response = await axios.post('/api/signout')
+    router.push('/signin')
+  }
+  useEffect(()=>{
+    const fetchUser = async()=>{
+      const response = await axios.get('/api/getuser')
+      setUser(response.data.user)
+      setLoading(false)
+    }
+    fetchUser()
+    
+  },[])
+
   return (
-    <div className="w-screen bg-white flex justify-center">
+    <div className="w-screen relative bg-white flex justify-center">
       <div className="w-[1440px] flex justify-between px-[120px] py-4 items-center">
         <div className="flex gap-4 items-center text-sm p-2">
           <Image src="/Vector.png" alt="logo" width={27} height={27} />
@@ -24,9 +44,13 @@ function Header() {
           >
             Records
           </Link>
+          <h1>{user.name}</h1>
         </div>
         <div className="flex gap-4">
-          <button className="btn rounded-3xl btn-primary text-white flex items-start">
+          <button
+            className="btn rounded-3xl btn-primary text-white flex items-start"
+            onClick={() => setRecordState(true)}
+          >
             <span className="text-4xl font-extralight">+</span>
             <h1 className="self-center">Record</h1>
           </button>
@@ -57,12 +81,17 @@ function Header() {
                 <a>Settings</a>
               </li>
               <li>
-                <a>Logout</a>
+                <a onClick={logOut}>Logout</a>
               </li>
             </ul>
           </div>
         </div>
       </div>
+      {recordState && (
+        <div className="w-screen flex justify-center items-center h-screen absolute bg-black bg-opacity-40">
+          <AddRecord setRecordState={setRecordState}/>
+        </div>
+      )}
     </div>
   );
 }

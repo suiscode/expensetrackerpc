@@ -13,7 +13,7 @@ function StageTracker() {
       >
         Currency
       </li>
-      <li className={`step ${stage == 3 && `step-primary`}`}>Balance</li>
+      <li className={`step ${stage == 3 && `step-primary`} ${stage == 2 && `step-primary`}`}>Balance</li>
       <li className={`step ${stage == 3 && `step-primary`}`}>Finish</li>
     </ul>
   );
