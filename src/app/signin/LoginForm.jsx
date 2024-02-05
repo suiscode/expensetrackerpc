@@ -19,7 +19,6 @@ function LoginForm() {
       password: signIn.password,
     });
     setLoading(false);
-    console.log(response);
     if (response.data === "Email does not exist") {
       setError("Email or password is wrong");
       setLoading(false);

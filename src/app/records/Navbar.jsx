@@ -1,5 +1,4 @@
 "use client";
-import { Slider, RangeSlider } from "rsuite";
 import Button from "@/components/Button";
 import React, { useState } from "react";
 import { useGlobalContext } from "@/app/context/Context";
@@ -28,15 +27,15 @@ function Navbar() {
       <h1>Types</h1>
       <div className="flex flex-col gap-3 px-4">
         <div className="flex items-center gap-3">
-          <input type="radio" name="radio-1" className="radio" checked />
+          <input type="radio" name="radio-1" className="radio" />
           <label>All</label>
         </div>
         <div className="flex items-center gap-3">
-          <input type="radio" name="radio-1" className="radio" checked />
+          <input type="radio" name="radio-1" className="radio" />
           <label>Expense</label>
         </div>
         <div className="flex items-center gap-3">
-          <input type="radio" name="radio-1" className="radio" checked />
+          <input type="radio" name="radio-1" className="radio" />
           <label>Income</label>
         </div>
       </div>
@@ -60,18 +59,6 @@ function Navbar() {
             placeholder="Type here"
             className="input input-bordered w-full max-w-xs"
           />
-        </div>
-        <div style={{ margin: "20px" }}>
-          <h2>Range Slider Demo</h2>
-          <Slider
-            range
-            defaultValue={[20, 80]}
-            value={rangeValue}
-            onChange={handleRangeChange}
-          />
-          <p>
-            Range: {rangeValue[0]} - {rangeValue[1]}
-          </p>
         </div>
       </div>
     </div>

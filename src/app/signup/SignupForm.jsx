@@ -29,7 +29,6 @@ function SignupForm() {
 
         return;
       } else {
-        console.log("next page");
         setStage(1);
         setIsSubmitting(false);
       }

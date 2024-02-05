@@ -7,21 +7,37 @@ import ChooseCateg from "./ChooseCateg";
 import Payee from "./Payee";
 import Note from "./Note";
 import DateAndTime from "./DateAndTime";
+import axios from "axios";
+import { useGlobalContext } from "@/app/context/Context";
 
 function AddRecord({ setRecordState }) {
+  const { user } = useGlobalContext();
   const [recordData, setRecordData] = useState({
     type: "Expense",
     amount: "",
     category: "",
-    date: "",
-    time: "",
+    // date: "",
+    // time: "",
     payee: "",
     note: "",
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(recordData);
+    const response = await axios.post("/api/transactions/", {
+      ...recordData,
+      userId: user._id,
+    });
+    setRecordData({
+      type: "Expense",
+      amount: "",
+      category: "",
+      // date: "",
+      // time: "",
+      payee: "",
+      note: "",
+    });
+    setRecordState(false);
   };
 
   return (
@@ -31,15 +47,15 @@ function AddRecord({ setRecordState }) {
         onSubmit={handleSubmit}
         className="px-6 py-5 h-full flex justify-between"
       >
-        <div className="flex-[1] gap-5 flex-col flex rounded-xl px-6">
-          <IeToggler setRecordData={setRecordData} />
+        <div className="gap-5  w-[55%] flex-col flex rounded-xl px-6">
+          <IeToggler setRecordData={setRecordData} recordData={recordData} />
           <Amount recordData={recordData} setRecordData={setRecordData} />
           <ChooseCateg recordData={recordData} setRecordData={setRecordData} />
-          <DateAndTime />
+          {/* <DateAndTime /> */}
 
           <Button label={"Add Record"} />
         </div>
-        <div className="flex-[1] flex flex-col rounded-xl px-6">
+        <div className="flex w-[45%] flex-col rounded-xl px-6">
           <Payee recordData={recordData} setRecordData={setRecordData} />
           <Note recordData={recordData} setRecordData={setRecordData} />
         </div>

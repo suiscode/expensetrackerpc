@@ -9,7 +9,6 @@ function Balance() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(credential);
     try {
       const response = await axios.post("/api/signup", {
         name: credential.name,
@@ -18,7 +17,6 @@ function Balance() {
         currency: credential.currency,
         balance: credential.balance,
       });
-      console.log(response);
     } catch (error) {
       console.error("Signup failed:", error);
     }

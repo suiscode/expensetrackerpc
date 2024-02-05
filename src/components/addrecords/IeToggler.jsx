@@ -1,12 +1,13 @@
 import React from "react";
 
-function IeToggler({setRecordData}) {
+function IeToggler({setRecordData,recordData}) {
+  const value = recordData.type
   return (
     <div className="flex w-full bg-slate-100 rounded-3xl">
-      <div onClick={()=>setRecordData((prev) => ({ ...prev, type: 'Expense' }))} className="bg-primary text-center text-white rounded-3xl py-2 w-full">
+      <div onClick={()=>setRecordData((prev) => ({ ...prev, type: 'Expense' }))} className={`${value === 'Expense' ? 'bg-primary text-white' : "bg-slate-100 text-black"} cursor-pointer text-center  rounded-3xl py-2 w-full`} >
         Expense
       </div>
-      <div onClick={()=>setRecordData((prev) => ({ ...prev, type: 'Income' }))} className="bg-slate-100 text-center text-black rounded-3xl py-2 w-full">
+      <div onClick={()=>setRecordData((prev) => ({ ...prev, type: 'Income' }))} className={`${value !== 'Expense' ? 'bg-primary text-white' : "bg-slate-100 text-black"} cursor-pointer text-center  rounded-3xl py-2 w-full`}>
         Income
       </div>
     </div>

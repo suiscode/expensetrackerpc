@@ -19,4 +19,18 @@ const userSchema = new mongoose.Schema({
   balance: { type: Number, required: true },
 });
 
-export const User = mongoose.models.User ||  mongoose.model("User", userSchema)
+const expenseSchema = new mongoose.Schema({
+  type: { type: String, enum: ["Expense", "Income"], required: true },
+  amount: { type: Number, required: true },
+  category: { type: String, required: true },
+  // date: { type: Date, default: Date.now },
+  // time: { type: String },
+  payee: { type: String, required: true },
+  note: { type: String, required: true },
+  userId: { type: String, required: true },
+});
+
+export const User = mongoose.models.User || mongoose.model("User", userSchema);
+
+export const Transactions =
+  mongoose.models.Transactions || mongoose.model("Transactions", expenseSchema);

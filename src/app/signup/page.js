@@ -6,7 +6,6 @@ import SignupSecondStep from "./SignupSecondStep";
 
 function page() {
   const { stage } = useGlobalContext();
-  console.log(stage);
 
   return <>{stage == 0 ? <SignupFirstStage /> : <SignupSecondStep />}</>;
 }

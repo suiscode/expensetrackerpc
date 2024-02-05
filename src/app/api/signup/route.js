@@ -6,11 +6,9 @@ import { cookies } from "next/headers";
 export async function POST(request) {
   connectDB();
   const body = await request.json();
-  console.log(body);
 
   try {
     const hashedPassword = await bcrypt.hash(body.password, 10);
-    console.log(hashedPassword);
     const user = await User.create({
       ...body,
       password: hashedPassword,

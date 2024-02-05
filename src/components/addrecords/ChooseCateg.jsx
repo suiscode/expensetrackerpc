@@ -7,6 +7,7 @@ function ChooseCateg({ recordData, setRecordData }) {
         <span className="label-text text-lg">Category</span>
       </div>
       <select
+        required
         value={recordData.category}
         onChange={(e) =>
           setRecordData((prev) => ({ ...prev, category: e.target.value }))
