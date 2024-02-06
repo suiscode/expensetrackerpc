@@ -16,14 +16,14 @@ function AddRecord({ setRecordState }) {
     type: "Expense",
     amount: "",
     category: "",
-    // date: "",
-    // time: "",
+    date: "",
+    time: "",
     payee: "",
     note: "",
   });
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    console.log(recordData);
     const response = await axios.post("/api/transactions/", {
       ...recordData,
       userId: user._id,
@@ -32,11 +32,12 @@ function AddRecord({ setRecordState }) {
       type: "Expense",
       amount: "",
       category: "",
-      // date: "",
-      // time: "",
+      date: "",
+      time: "",
       payee: "",
       note: "",
     });
+
     setRecordState(false);
   };
 
@@ -51,9 +52,17 @@ function AddRecord({ setRecordState }) {
           <IeToggler setRecordData={setRecordData} recordData={recordData} />
           <Amount recordData={recordData} setRecordData={setRecordData} />
           <ChooseCateg recordData={recordData} setRecordData={setRecordData} />
-          {/* <DateAndTime /> */}
+          <DateAndTime recordData={recordData} setRecordData={setRecordData} />
 
-          <Button label={"Add Record"} />
+          <button
+            className={`${
+              recordData.type !== "Expense"
+                ? "bg-green-600 text-white"
+                : "bg-primary text-black"
+            } rounded-3xl h-12 text-white`}
+          >
+            Add Record
+          </button>
         </div>
         <div className="flex w-[45%] flex-col rounded-xl px-6">
           <Payee recordData={recordData} setRecordData={setRecordData} />

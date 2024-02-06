@@ -7,5 +7,6 @@ export default function Home() {
     <main className="flex min-h-screen w-[500px] flex-col items-center justify-between p-24">
       <Link href='dashboard'>Dashboard</Link>
     </main>
+    
   );
 }

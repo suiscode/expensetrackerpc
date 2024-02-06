@@ -1,41 +1,38 @@
+"use client";
 import Header from "@/components/Header";
-import Image from "next/image";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Amount from "./Amount";
 import Chart from "./Chart";
 import LastRecords from "./LastRecords";
-import { connectDB } from "@/lib/utils";
-import { Transactions } from "@/lib/models";
-import { cookies } from "next/headers";
-import jwt from "jsonwebtoken";
+import Card from "./Card";
+import PieChart, { doughtnutData } from "./PieChart";
+import axios from "axios";
+import { useGlobalContext } from "../context/Context";
 
-async function fetchData(request) {
-  try {
-    connectDB();
-    const cookieStore = cookies();
-    const token = cookieStore.get("cookie").value;
-    const { id } = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
-    const transactions = await Transactions.find({ userId: id });
-    return transactions;
-  } catch (error) {
-    return "Error";
-  }
-}
+function DashBoardPage() {
+  const {recordState} = useGlobalContext()
 
-async function DashBoardPage() {
-  const transactions = await fetchData();
+  const [transactions,setTransactions]= useState([])
+  useEffect(()=>{
+    const fetchData =async()=>{
+      const {data} = await axios.get('/api/transactions/')
+      setTransactions(data.data)
+    }
+  fetchData()
+  },[recordState])
+  
   return (
     <div className="flex flex-col items-center bg-slate-100">
       <Header />
       <div className="w-[1440px] min-h-[calc(100vh-85px)] gap-6 flex flex-col items-center py-8 px-[120px]">
         <div className="flex justify-between w-full">
-          <Image src="/cart.png" alt="card" width={384} height={216} />
-          <Amount transactions={transactions} name='Expense'/>
-          <Amount transactions={transactions} name='Income'/>
+          <Card transactions={transactions} />
+          <Amount transactions={transactions} name="Expense" />
+          <Amount transactions={transactions} name="Income" />
         </div>
         <div className="flex justify-between w-full gap-6">
           <Chart />
-          <Chart />
+          <PieChart transactions={transactions} />
         </div>
         <LastRecords transactions={transactions} />
       </div>

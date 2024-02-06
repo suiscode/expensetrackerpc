@@ -8,24 +8,22 @@ import { useGlobalContext } from "@/app/context/Context";
 import axios from "axios";
 
 function Header() {
-
-  const router = useRouter()
-  const {setRecordState, recordState,user,setUser} = useGlobalContext()
-  const [loading,setLoading] = useState(true)
+  const router = useRouter();
+  const { setRecordState, recordState, user, setUser } = useGlobalContext();
+  const [loading, setLoading] = useState(true);
   const params = usePathname();
-  const logOut = async ()=>{
-    const response = await axios.post('/api/signout')
-    router.push('/signin')
-  }
-  useEffect(()=>{
-    const fetchUser = async()=>{
-      const response = await axios.get('/api/getuser')
-      setUser(response.data.user)
-      setLoading(false)
-    }
-    fetchUser()
-    
-  },[])
+  const logOut = async () => {
+    const response = await axios.post("/api/signout");
+    router.push("/signin");
+  };
+  useEffect(() => {
+    const fetchUser = async () => {
+      const response = await axios.get("/api/getuser");
+      setUser(response.data.user);
+      setLoading(false);
+    };
+    fetchUser();
+  }, []);
 
   return (
     <div className="w-screen relative bg-white flex justify-center">
@@ -72,14 +70,11 @@ function Header() {
               className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
             >
               <li>
-                <a className="justify-between">
+                <Link href="/profile" className="justify-between">
                   Profile
-                  <span className="badge">New</span>
-                </a>
+                </Link>
               </li>
-              <li>
-                <a>Settings</a>
-              </li>
+
               <li>
                 <a onClick={logOut}>Logout</a>
               </li>
@@ -89,7 +84,7 @@ function Header() {
       </div>
       {recordState && (
         <div className="w-screen flex justify-center items-center h-screen absolute bg-black bg-opacity-40">
-          <AddRecord setRecordState={setRecordState}/>
+          <AddRecord setRecordState={setRecordState} />
         </div>
       )}
     </div>
