@@ -3,8 +3,6 @@ import React from "react";
 function Amount({name,transactions}) {
   const list = transactions.filter(item=> item.type === name)
   const sum = list.reduce((total, item) => total + item.amount, 0);
-  console.log(list);
-  console.log(sum);
 
   return (
     <div className="flex flex-col rounded-xl w-[384px] bg-white">

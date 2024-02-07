@@ -1,23 +1,21 @@
 "use client";
-import Button from "@/components/Button";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useGlobalContext } from "@/app/context/Context";
+import AddCategory from "@/components/addcategory/AddCategory";
+import Image from "next/image";
 
 function Navbar() {
-  const { setRecordState, recordState } = useGlobalContext();
-  const [rangeValue, setRangeValue] = useState([20, 80]);
+  const { category, setCategory } = useGlobalContext();
 
-  const handleRangeChange = (value) => {
-    setRangeValue(value);
-  };
   return (
     <div className="flex px-4 py-6 flex-col w-[282px] gap-6 h-[2000px] bg-white rounded-xl border-[1px] ">
       <h1 className="text-2xl font-semibold ">Records</h1>
       <button
-        onClick={() => setRecordState(true)}
-        className=" bg-primary flex items-center justify-center text-white rounded-3xl py-2 h-[32px] w-full"
+        className="btn bg-primary rounded-3xl text-white flex items-center"
+        onClick={() => document.getElementById("my_modal_3").showModal()}
       >
-        Add
+        <span className="text-4xl mt-[-4px] font-extralight">+</span>
+        <h1 className="self-center">Record</h1>
       </button>
       <input
         type="text"
@@ -25,6 +23,7 @@ function Navbar() {
         className="input   bg-gray-100 input-sm input-bordered w-full max-w-xs"
       />
       <h1>Types</h1>
+
       <div className="flex flex-col gap-3 px-4">
         <div className="flex items-center gap-3">
           <input type="radio" name="radio-1" className="radio" />
@@ -43,24 +42,32 @@ function Navbar() {
         <h1>Category</h1>
         <h1 className="text-gray-200">Clear</h1>
       </div>
-      <div className="w-full bg-red-100">
-        <h1>Add Category</h1>
-      </div>
-      <div>
-        <h1>Amount Range</h1>
-        <div className="flex gap-4 justify-between">
-          <input
-            type="text"
-            placeholder="Type here"
-            className="input input-bordered w-full max-w-xs"
-          />
-          <input
-            type="text"
-            placeholder="Type here"
-            className="input input-bordered w-full max-w-xs"
-          />
+
+      <ul className="flex flex-col gap-2">
+        {category.map((item) => (
+          <div key={item._id} className="flex items-center gap-2">
+            <Image src="/eyeOff.svg" alt="eye" width={25} height={25} />
+            <li className="text-lg cursor-pointer hover:text-gray-500">
+              {item.name}
+            </li>
+          </div>
+        ))}
+      </ul>
+
+      <button
+        className="btn"
+        onClick={() => document.getElementById("my_modal_2").showModal()}
+      >
+        Add category
+      </button>
+      <dialog id="my_modal_2" className="modal">
+        <div className="modal-box max-w-[30%] flex">
+          <AddCategory />
         </div>
-      </div>
+        <form method="dialog" className="modal-backdrop">
+          <button>close</button>
+        </form>
+      </dialog>
     </div>
   );
 }

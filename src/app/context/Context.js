@@ -15,10 +15,15 @@ export const GlobalContextProvider = ({ children }) => {
   const [stage, setStage] = useState(0);
   const [recordState, setRecordState] = useState(false);
   const [user, setUser] = useState({});
+  const [refresh, setRefresh] = useState(false);
+  const [category, setCategory] = useState([]);
+
 
   return (
     <GlobalContext.Provider
       value={{
+        category,
+        setCategory,
         recordState,
         setRecordState,
         credential,
@@ -26,7 +31,9 @@ export const GlobalContextProvider = ({ children }) => {
         stage,
         setStage,
         user,
-        setUser
+        setUser,
+        refresh,
+        setRefresh
       }}
     >
       {children}

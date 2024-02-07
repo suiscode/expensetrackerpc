@@ -2,6 +2,7 @@
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { useEffect, useRef } from "react";
 import { Doughnut } from "react-chartjs-2";
+import { useGlobalContext } from "../context/Context";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -18,6 +19,9 @@ const getBackgroundColor = (index) => {
 };
 
 function PieChart({ transactions }) {
+
+  const {category}  = useGlobalContext()
+
   const chartRef = useRef(null);
   useEffect(() => {
     const chart = chartRef.current;
@@ -64,7 +68,13 @@ function PieChart({ transactions }) {
                 style={{ backgroundColor: getBackgroundColor(index) }}
                 className="w-4 h-4 rounded-full"
               ></div>
-              <h1>{item.category}</h1>
+              <h1>{category
+                        .filter((categ) => categ._id === item.category)
+                        .map((filteredCategory) => (
+                          <span key={filteredCategory._id}>
+                            {filteredCategory.name}
+                          </span>
+                        ))}</h1>
               <h1>{item.amount.toLocaleString()}$</h1>
             </li>
           ))}

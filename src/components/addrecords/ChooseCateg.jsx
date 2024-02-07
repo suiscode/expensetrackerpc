@@ -1,6 +1,9 @@
+"use client";
+import { useGlobalContext } from "@/app/context/Context";
 import React from "react";
 
 function ChooseCateg({ recordData, setRecordData }) {
+  const { category } = useGlobalContext();
   return (
     <label className="form-control w-full ">
       <div className="label">
@@ -17,7 +20,11 @@ function ChooseCateg({ recordData, setRecordData }) {
         <option disabled value="">
           Choose
         </option>
-        <option value="HouseHold">House Hold</option>
+        {category.map((item) => (
+          <option key={item._id} value={item._id}>
+            {item.name}
+          </option>
+        ))}
       </select>
     </label>
   );

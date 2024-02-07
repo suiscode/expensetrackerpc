@@ -30,7 +30,15 @@ const expenseSchema = new mongoose.Schema({
   userId: { type: String, required: true },
 });
 
+const categorySchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  img: { type: String, required: true },
+});
+
 export const User = mongoose.models.User || mongoose.model("User", userSchema);
 
 export const Transactions =
   mongoose.models.Transactions || mongoose.model("Transactions", expenseSchema);
+
+export const Category =
+  mongoose.models.Category || mongoose.model("Category", categorySchema);

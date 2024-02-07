@@ -42,8 +42,8 @@ function AddRecord({ setRecordState }) {
   };
 
   return (
-    <div className="flex flex-col w-1/2 rounded-xl bg-white">
-      <Title setRecordState={setRecordState} />
+    <>
+      <Title />
       <form
         onSubmit={handleSubmit}
         className="px-6 py-5 h-full flex justify-between"
@@ -69,7 +69,7 @@ function AddRecord({ setRecordState }) {
           <Note recordData={recordData} setRecordData={setRecordData} />
         </div>
       </form>
-    </div>
+    </>
   );
 }
 

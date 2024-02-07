@@ -9,7 +9,7 @@ import axios from "axios";
 
 function Header() {
   const router = useRouter();
-  const { setRecordState, recordState, user, setUser } = useGlobalContext();
+  const { setRecordState, recordState, user, setUser, setCategory,refresh,setRefresh } = useGlobalContext();
   const [loading, setLoading] = useState(true);
   const params = usePathname();
   const logOut = async () => {
@@ -24,6 +24,14 @@ function Header() {
     };
     fetchUser();
   }, []);
+
+  useEffect(() => {
+    const fetchCategory = async () => {
+      const { data } = await axios.get("/api/category");
+      setCategory(data.data);
+    };
+    fetchCategory();
+  }, [refresh]);
 
   return (
     <div className="w-screen relative bg-white flex justify-center">
@@ -46,10 +54,10 @@ function Header() {
         </div>
         <div className="flex gap-4">
           <button
-            className="btn rounded-3xl btn-primary text-white flex items-start"
-            onClick={() => setRecordState(true)}
+            className="btn bg-primary text-white flex items-center"
+            onClick={() => document.getElementById("my_modal_3").showModal()}
           >
-            <span className="text-4xl font-extralight">+</span>
+            <span className="text-4xl mt-[-4px] font-extralight">+</span>
             <h1 className="self-center">Record</h1>
           </button>
           <div className="dropdown dropdown-end">
@@ -82,11 +90,14 @@ function Header() {
           </div>
         </div>
       </div>
-      {recordState && (
-        <div className="w-screen flex justify-center items-center h-screen absolute bg-black bg-opacity-40">
-          <AddRecord setRecordState={setRecordState} />
+      <dialog id="my_modal_3" className="modal">
+        <div className="modal-box flex flex-col max-w-[45%]">
+          <AddRecord/>
         </div>
-      )}
+        <form method="dialog" className="modal-backdrop">
+          <button>close</button>
+        </form>
+      </dialog>
     </div>
   );
 }

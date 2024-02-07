@@ -1,7 +1,10 @@
+"use client";
 import Image from "next/image";
 import React from "react";
+import { useGlobalContext } from "../context/Context";
 
 function LastRecords({ transactions }) {
+  const { category } = useGlobalContext();
   const currentDate = new Date();
 
   return (
@@ -47,9 +50,17 @@ function LastRecords({ transactions }) {
                 className="flex w-full py-5 justify-between items-center border-b-2"
               >
                 <div className="flex items-center gap-4">
-                  <h1>IMAGE</h1>
+                  <h1>Image</h1>
                   <div className="flex flex-col gap-2">
-                    <h1>Lending & Renting</h1>
+                    <h1>
+                      {category
+                        .filter((categ) => categ._id === item.category)
+                        .map((filteredCategory) => (
+                          <span key={filteredCategory._id}>
+                            {filteredCategory.name}
+                          </span>
+                        ))}
+                    </h1>
                     <h1 className="text-xs text-gray-400">{timeElapsed}</h1>
                   </div>
                 </div>
