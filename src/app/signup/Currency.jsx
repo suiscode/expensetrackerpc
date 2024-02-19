@@ -2,6 +2,13 @@ import Button from "@/components/Button";
 import Image from "next/image";
 import React from "react";
 import { useGlobalContext } from "../context/Context";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 function Currency() {
   const { credential, setCredential, setStage } = useGlobalContext();
@@ -28,6 +35,7 @@ function Currency() {
         <option value={"MNT"}>MNT - Mongolia Tugrik</option>
         <option value={"USD"}>USD - American Dollar</option>
       </select>
+
       <p className="text-xs text-gray-500">
         Your base currency should be the one you use most often. All transaction
         in other currencies will be calculated based on this one{" "}

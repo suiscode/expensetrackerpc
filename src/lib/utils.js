@@ -1,3 +1,8 @@
+import { clsx } from "clsx"
+import { twMerge } from "tailwind-merge"
+
+
+
 import 'dotenv/config'
 import { connect } from 'mongoose';
 import jwt from 'jsonwebtoken'
@@ -20,6 +25,9 @@ export const connectDB = async () => {
   }
 };
 
+export function cn(...inputs) {
+  return twMerge(clsx(inputs))
+}
 
 export const generateToken = (id) => {
   return jwt.sign({ id }, process.env.ACCESS_TOKEN_SECRET, {

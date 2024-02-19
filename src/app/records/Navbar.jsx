@@ -4,7 +4,7 @@ import { useGlobalContext } from "@/app/context/Context";
 import AddCategory from "@/components/addcategory/AddCategory";
 import Image from "next/image";
 
-function Navbar() {
+function Navbar({setSearch, search ,setType}) {
   const { category, setCategory } = useGlobalContext();
 
   return (
@@ -21,20 +21,22 @@ function Navbar() {
         type="text"
         placeholder="Type here"
         className="input   bg-gray-100 input-sm input-bordered w-full max-w-xs"
+        value={search}
+        onChange={e=>setSearch(e.target.value)}
       />
       <h1>Types</h1>
 
       <div className="flex flex-col gap-3 px-4">
         <div className="flex items-center gap-3">
-          <input type="radio" name="radio-1" className="radio" />
+          <input onChange={()=>setType('')} type="radio" name="radio-1" className="radio"/>
           <label>All</label>
         </div>
         <div className="flex items-center gap-3">
-          <input type="radio" name="radio-1" className="radio" />
+          <input onChange={()=>setType('Expense')} type="radio" name="radio-1" className="radio" />
           <label>Expense</label>
         </div>
         <div className="flex items-center gap-3">
-          <input type="radio" name="radio-1" className="radio" />
+          <input onChange={()=>setType('Income')}type="radio" name="radio-1" className="radio" />
           <label>Income</label>
         </div>
       </div>
