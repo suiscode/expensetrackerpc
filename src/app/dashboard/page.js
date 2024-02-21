@@ -8,6 +8,7 @@ import Card from "./Card";
 import PieChart, { doughtnutData } from "./PieChart";
 import axios from "axios";
 import { useGlobalContext } from "../context/Context";
+import { BarChart } from "./BarChart";
 
 function DashBoardPage() {
   const {recordState} = useGlobalContext()
@@ -31,7 +32,7 @@ function DashBoardPage() {
           <Amount transactions={transactions} name="Income" />
         </div>
         <div className="flex justify-between w-full gap-6">
-          <Chart />
+          <BarChart transactions={transactions}/>
           <PieChart transactions={transactions} />
         </div>
         <LastRecords transactions={transactions} />

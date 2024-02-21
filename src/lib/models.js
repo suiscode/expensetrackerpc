@@ -11,6 +11,7 @@ const userSchema = new mongoose.Schema({
   },
   password: { type: String, required: true },
   registerDate: { type: Date, default: Date.now },
+  obj: { type: Object, required: false, default: {a: "asd", b:'b'} },
   currency: {
     type: String,
     required: true,
@@ -24,7 +25,7 @@ const expenseSchema = new mongoose.Schema({
   amount: { type: Number, required: true },
   category: { type: String, required: true },
   date: { type: String, required: true },
-  time: { type: String, required: true },
+  updatedAt: { type: Date, default: Date.now },
   payee: { type: String, required: true },
   note: { type: String, required: true },
   userId: { type: String, required: true },

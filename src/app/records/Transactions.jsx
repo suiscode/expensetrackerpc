@@ -9,20 +9,24 @@ function Transactions({ type, search }) {
   const { recordState, category } = useGlobalContext();
   const [sort, setSort] = useState("1");
 
+
+  let page = 1
+
   const [transactions, setTransactions] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
-      const { data } = await axios.get("/api/transactions/");
+      const { data } = await axios.get(`/api/transactions?offset=${page}&limit=2`);
       setTransactions(data.data);
     };
     fetchData();
   }, [recordState]);
-  console.log(transactions);
 
   let sortedTransactions;
 
+  // SORT AND FILTER
+
   if (sort === "1") {
-    sortedTransactions = [...transactions].reverse();
+    sortedTransactions = [...transactions];
   } else {
     sortedTransactions = [...transactions].sort((a, b) => b.amount - a.amount);
   }
@@ -35,9 +39,7 @@ function Transactions({ type, search }) {
     }
   });
 
-  const filteredCategory = category.filter((item) =>
-    item.name.includes(search)
-  );
+  // SUM OF TRANSACTIONS
 
   const listExpense = transactions.filter((item) => item.type === "Expense");
   const listIncome = transactions.filter((item) => item.type === "Income");
@@ -51,7 +53,7 @@ function Transactions({ type, search }) {
   let numtype = balance >= 0 ? false : true
 
   return (
-    <div className="flex flex-1 h-[2000px] gap-6 flex-col">
+    <div className="flex flex-1 min-h-[1200px] gap-6 flex-col">
       <div className="flex flex-col gap-6">
         <select
           value={sort}
@@ -73,9 +75,15 @@ function Transactions({ type, search }) {
       </div>
       <ul className="flex flex-col w-full gap-3">
         {filteredTransactions.map((item) => (
-          <Transaction key={item.id} category={category} item={item} />
+          <Transaction key={crypto.randomUUID()} category={category} item={item} />
         ))}
       </ul>
+      <div className="flex w-full justify-center items-center gap-4">
+      <button className="btn">Previous</button>
+      <h1>1</h1>
+      <h1>2</h1>
+      <button className="btn">Next</button>
+      </div>
     </div>
   );
 }

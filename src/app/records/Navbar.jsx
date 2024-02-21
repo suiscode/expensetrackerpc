@@ -8,7 +8,7 @@ function Navbar({setSearch, search ,setType}) {
   const { category, setCategory } = useGlobalContext();
 
   return (
-    <div className="flex px-4 py-6 flex-col w-[282px] gap-6 h-[2000px] bg-white rounded-xl border-[1px] ">
+    <div className="flex px-4 py-6 flex-col w-[282px] gap-6 h-[1200px] bg-white rounded-xl border-[1px] ">
       <h1 className="text-2xl font-semibold ">Records</h1>
       <button
         className="btn bg-primary rounded-3xl text-white flex items-center"

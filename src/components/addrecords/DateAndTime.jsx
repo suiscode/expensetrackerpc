@@ -1,22 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-function DateAndTime({ recordData, setRecordData }) {
-  const [date, setDate] = useState("");
-  const [time, setTime] = useState("");
-
-  const handleDateChange = (e) => {
-    setRecordData((prev) => ({ ...prev, date: e.target.value }));
-  };
-
-  const handleTimeChange = (e) => {
-    setRecordData((prev) => ({ ...prev, time: e.target.value }));
-
-  };
+function DateAndTime({ time,setTime,date,setDate }) {
 
   return (
     <div>
-      <input value={recordData.date} onChange={handleDateChange} required type="date" />
-      <input value={recordData.time} onChange={handleTimeChange} required type="time" />
+      <input value={date} onChange={e=>setDate(e.target.value)} required type="date" />
+      <input value={time} onChange={e=>setTime(e.target.value)} required type="time" />
     </div>
   );
 }

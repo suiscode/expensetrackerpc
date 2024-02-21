@@ -7,6 +7,15 @@ function LastRecords({ transactions }) {
   const { category } = useGlobalContext();
   const currentDate = new Date();
 
+  transactions.sort((a, b) => {
+    // Combine date and time strings and convert them to Date objects
+    const dateTimeA = new Date(`${a.date}T${a.time}`);
+    const dateTimeB = new Date(`${b.date}T${b.time}`);
+
+    // Compare date and time
+    return dateTimeB - dateTimeA;
+  });
+
   return (
     <div className="flex flex-col rounded-xl w-full bg-white">
       <div className="border-b-[2px] flex items-center gap-2 py-4 px-6">
@@ -15,7 +24,7 @@ function LastRecords({ transactions }) {
       <div className="px-6 py-5 h-full flex flex-col justify-between">
         <ul className="flex flex-col">
           {transactions.slice(0, 5).map((item) => {
-            const transactionDate = new Date(`${item.date}T${item.time}`);
+            const transactionDate = new Date(`${item.date}`);
 
             const monthsPassed =
               (currentDate.getFullYear() - transactionDate.getFullYear()) * 12 +
@@ -50,7 +59,23 @@ function LastRecords({ transactions }) {
                 className="flex w-full py-5 justify-between items-center border-b-2"
               >
                 <div className="flex items-center gap-4">
-                  <h1>Image</h1>
+                  <div
+                    className={`${
+                      item.type !== "Expense" ? "bg-primary" : "bg-red-600"
+                    } p-2 rounded-full`}
+                  >
+                    {category
+                      .filter((categ) => categ._id === item.category)
+                      .map((filteredCategory) => (
+                        <Image
+                        key={crypto.randomUUID()}
+                          src={filteredCategory.img}
+                          alt="img"
+                          width={30}
+                          height={30}
+                        />
+                      ))}
+                  </div>
                   <div className="flex flex-col gap-2">
                     <h1>
                       {category

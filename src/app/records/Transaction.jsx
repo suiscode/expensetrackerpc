@@ -18,6 +18,7 @@ function Transaction({item, category}) {
                     .filter((categ) => categ._id === item.category)
                     .map((filteredCategory) => (
                       <Image
+                      key={crypto.randomUUID()}
                         src={filteredCategory.img}
                         alt="img"
                         width={30}
@@ -35,7 +36,7 @@ function Transaction({item, category}) {
                         </span>
                       ))}
                   </h1>
-                  <h1 className="text-xs text-gray-400">{item.time}</h1>
+                  <h1 className="text-xs text-gray-400">{item.date.replace('T'," ")}</h1>
                 </div>
               </div>
               <h1

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "../Button";
 import Title from "./Title";
 import IeToggler from "./IeToggler";
@@ -16,30 +16,37 @@ function AddRecord({ setRecordState }) {
     type: "Expense",
     amount: "",
     category: "",
-    date: "",
-    time: "",
     payee: "",
     note: "",
   });
 
+  const [date, setDate] = useState('');
+  const [time, setTime] = useState('');
+
   const handleSubmit = async (e) => {
+    // e.preventDefault()
     console.log(recordData);
+    console.log(`${date}T${time}:00`,);
     const response = await axios.post("/api/transactions/", {
       ...recordData,
       userId: user._id,
+      date:`${date}T${time}`
     });
     setRecordData({
       type: "Expense",
       amount: "",
       category: "",
       date: "",
-      time: "",
       payee: "",
       note: "",
     });
 
     setRecordState(false);
   };
+
+  useEffect(()=>{
+    console.log(recordData);
+  },[recordData])
 
   return (
     <>
@@ -52,7 +59,7 @@ function AddRecord({ setRecordState }) {
           <IeToggler setRecordData={setRecordData} recordData={recordData} />
           <Amount recordData={recordData} setRecordData={setRecordData} />
           <ChooseCateg recordData={recordData} setRecordData={setRecordData} />
-          <DateAndTime recordData={recordData} setRecordData={setRecordData} />
+          <DateAndTime date={date} setDate={setDate} time={time} setTime={setTime}/>
 
           <button
             className={`${
