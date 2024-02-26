@@ -5,39 +5,26 @@ import axios from "axios";
 import Image from "next/image";
 import Transaction from "./Transaction";
 
-function Transactions({ type, search }) {
+function Transactions({ type, search, categorySort }) {
   const { recordState, category } = useGlobalContext();
-  const [sort, setSort] = useState("1");
+  const [sort, setSort] = useState("Latest");
 
-
-  let page = 1
+  let page = 1;
 
   const [transactions, setTransactions] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
-      const { data } = await axios.get(`/api/transactions?offset=${page}&limit=2`);
-      setTransactions(data.data);
+      try {
+        const { data } = await axios.get(
+          `/api/transactions?offset=${page}&limit=10&type=${type}&sort=${sort}&category=${categorySort}`
+        );
+        setTransactions(data.data);
+      } catch (e) {
+        console.log(e);
+      }
     };
     fetchData();
-  }, [recordState]);
-
-  let sortedTransactions;
-
-  // SORT AND FILTER
-
-  if (sort === "1") {
-    sortedTransactions = [...transactions];
-  } else {
-    sortedTransactions = [...transactions].sort((a, b) => b.amount - a.amount);
-  }
-
-  const filteredTransactions = sortedTransactions.filter((item) => {
-    if (!type) {
-      return true;
-    } else {
-      return item.type === type;
-    }
-  });
+  }, [recordState, type, sort, categorySort]);
 
   // SUM OF TRANSACTIONS
 
@@ -50,7 +37,9 @@ function Transactions({ type, search }) {
   );
   const sumIncome = listIncome.reduce((total, item) => total + item.amount, 0);
   const balance = sumIncome - sumExpense;
-  let numtype = balance >= 0 ? false : true
+  let numtype = balance >= 0 ? false : true;
+
+  console.log(transactions);
 
   return (
     <div className="flex flex-1 min-h-[1200px] gap-6 flex-col">
@@ -62,27 +51,35 @@ function Transactions({ type, search }) {
           }}
           className="bg-gray-100 select select-bordered w-full max-w-xs"
         >
-          <option value={"1"}>Latest First</option>
-          <option value={"2"}>Highest First</option>
+          <option value={"Latest"}>Latest First</option>
+          <option value={"Highest"}>Highest First</option>
         </select>
         <div className="bg-white p-3 rounded-2xl flex justify-between">
           <h1>Select All</h1>
-          <h1 className={`${!numtype ? "text-lime-500" : "text-red-500"} flex gap-2`}>
+          <h1
+            className={`${
+              !numtype ? "text-lime-500" : "text-red-500"
+            } flex gap-2`}
+          >
             {!numtype && "+ "}
             {balance}
           </h1>
         </div>
       </div>
       <ul className="flex flex-col w-full gap-3">
-        {filteredTransactions.map((item) => (
-          <Transaction key={crypto.randomUUID()} category={category} item={item} />
+        {transactions.map((item) => (
+          <Transaction
+            key={crypto.randomUUID()}
+            category={category}
+            item={item}
+          />
         ))}
       </ul>
       <div className="flex w-full justify-center items-center gap-4">
-      <button className="btn">Previous</button>
-      <h1>1</h1>
-      <h1>2</h1>
-      <button className="btn">Next</button>
+        <button className="btn">Previous</button>
+        <h1>1</h1>
+        <h1>2</h1>
+        <button className="btn">Next</button>
       </div>
     </div>
   );

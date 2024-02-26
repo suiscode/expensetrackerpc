@@ -17,6 +17,8 @@ function Balance() {
         currency: credential.currency,
         balance: credential.balance,
       });
+    console.log(response);
+
     } catch (error) {
       console.error("Signup failed:", error);
     }

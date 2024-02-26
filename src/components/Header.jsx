@@ -28,7 +28,7 @@ function Header() {
   useEffect(() => {
     const fetchCategory = async () => {
       const { data } = await axios.get("/api/category");
-      setCategory(data.data);
+      setCategory(data.categories);
     };
     fetchCategory();
   }, [refresh]);

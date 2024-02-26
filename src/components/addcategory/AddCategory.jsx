@@ -16,19 +16,17 @@ function AddCategory() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setRefresh(true);
-    const res = await axios.post("/api/category/", { category });
-    if (res.data === "Category already exists") {
-      setError(res.data);
-    } else {
+    try {
+      const res = await axios.post("/api/category/", { category });
       setError("");
       setCategory({
         name: "",
         img: "/house.svg",
       });
+      setRefresh(false);
+    } catch (e) {
+      setError(e.response.data.error);
     }
-    console.log(res);
-
-    setRefresh(false);
   };
 
   return (
@@ -50,7 +48,7 @@ function AddCategory() {
             className="max-w-full bg-gray-100 input input-bordered w-full "
           />
         </div>
-        {error && <h1 className="text-red-400">{error}</h1>}
+        {error && <h1 className="text-red-400 text-center">{error}</h1>}
         <button
           className={` bg-green-600 text-white
             rounded-3xl h-12 `}

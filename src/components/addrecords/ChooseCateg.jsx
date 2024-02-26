@@ -21,7 +21,7 @@ function ChooseCateg({ recordData, setRecordData }) {
           Choose
         </option>
         {category.map((item) => (
-          <option key={item._id} value={item._id}>
+          <option key={crypto.randomUUID()} value={item.id}>
             {item.name}
           </option>
         ))}

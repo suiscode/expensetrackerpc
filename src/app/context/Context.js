@@ -16,8 +16,7 @@ export const GlobalContextProvider = ({ children }) => {
   const [recordState, setRecordState] = useState(false);
   const [user, setUser] = useState({});
   const [refresh, setRefresh] = useState(false);
-  const [category, setCategory] = useState([]);
-
+  const [category, setCategory] = useState([{name:'Yoga', img:'/dollar.svg'},{name:'Yoga', img:'/dollar.svg'}]);
 
   return (
     <GlobalContext.Provider

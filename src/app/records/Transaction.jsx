@@ -15,7 +15,7 @@ function Transaction({item, category}) {
                   } p-2 rounded-full`}
                 >
                   {category
-                    .filter((categ) => categ._id === item.category)
+                    .filter((categ) => categ.id == item.category)
                     .map((filteredCategory) => (
                       <Image
                       key={crypto.randomUUID()}
@@ -29,9 +29,9 @@ function Transaction({item, category}) {
                 <div className="flex flex-col gap-2">
                   <h1>
                     {category
-                      .filter((categ) => categ._id === item.category)
+                      .filter((categ) => categ.id == item.category)
                       .map((filteredCategory) => (
-                        <span key={filteredCategory._id}>
+                        <span key={filteredCategory.id}>
                           {filteredCategory.name}
                         </span>
                       ))}

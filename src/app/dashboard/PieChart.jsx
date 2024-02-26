@@ -63,7 +63,7 @@ function PieChart({ transactions }) {
         </div>
         <ul>
           {listExpense.map((item, index) => (
-            <li key={item._id} className="flex items-center gap-4">
+            <li key={item.id} className="flex items-center gap-4">
               <div
                 style={{ backgroundColor: getBackgroundColor(index) }}
                 className="w-4 h-4 rounded-full"
@@ -71,7 +71,7 @@ function PieChart({ transactions }) {
               <h1>{category
                         .filter((categ) => categ._id === item.category)
                         .map((filteredCategory) => (
-                          <span key={filteredCategory._id}>
+                          <span key={crypto.randomUUID()}>
                             {filteredCategory.name}
                           </span>
                         ))}</h1>

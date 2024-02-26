@@ -1,22 +1,26 @@
 import { User } from "@/lib/models";
-import { connectDB, generateToken } from "@/lib/utils";
+import { generateToken } from "@/lib/utils";
 import bcrypt from "bcrypt";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
+import { sql } from "@vercel/postgres";
 
 export async function POST(res) {
-  connectDB();
   const body = await res.json();
-  const user = await User.findOne({ email: body.email });
-  if (!user) {
-    console.log('no user');
-    return new Response("Email does not exist");
+  const existingUser =
+    await sql`SELECT * FROM users WHERE email = ${body.email};`;
+  if (!existingUser.rows.length) {
+    return NextResponse.json(
+      { error: "Email does not exist" },
+      { status: 400 }
+    );
   } else {
-    if (await bcrypt.compare(body.password, user.password)) {
-      cookies().set("cookie", generateToken(user._id));
-      return NextResponse.json({user:user});
+    console.log(existingUser.rows[0].password);
+    if (await bcrypt.compare(body.password, existingUser.rows[0].password)) {
+      cookies().set("cookie", generateToken(existingUser.rows[0].id));
+      return NextResponse.json({ user: existingUser.rows[0] });
     } else {
-      return new Response('Email does not exist')
+      return new Response("Email does not exist");
     }
   }
 }

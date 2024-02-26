@@ -4,7 +4,7 @@ import { useGlobalContext } from "@/app/context/Context";
 import AddCategory from "@/components/addcategory/AddCategory";
 import Image from "next/image";
 
-function Navbar({setSearch, search ,setType}) {
+function Navbar({ setSearch, search, setType, categorySort, setCategorySort }) {
   const { category, setCategory } = useGlobalContext();
 
   return (
@@ -22,21 +22,36 @@ function Navbar({setSearch, search ,setType}) {
         placeholder="Type here"
         className="input   bg-gray-100 input-sm input-bordered w-full max-w-xs"
         value={search}
-        onChange={e=>setSearch(e.target.value)}
+        onChange={(e) => setSearch(e.target.value)}
       />
       <h1>Types</h1>
 
       <div className="flex flex-col gap-3 px-4">
         <div className="flex items-center gap-3">
-          <input onChange={()=>setType('')} type="radio" name="radio-1" className="radio"/>
+          <input
+            onChange={() => setType("")}
+            type="radio"
+            name="radio-1"
+            className="radio"
+          />
           <label>All</label>
         </div>
         <div className="flex items-center gap-3">
-          <input onChange={()=>setType('Expense')} type="radio" name="radio-1" className="radio" />
+          <input
+            onChange={() => setType("Expense")}
+            type="radio"
+            name="radio-1"
+            className="radio"
+          />
           <label>Expense</label>
         </div>
         <div className="flex items-center gap-3">
-          <input onChange={()=>setType('Income')}type="radio" name="radio-1" className="radio" />
+          <input
+            onChange={() => setType("Income")}
+            type="radio"
+            name="radio-1"
+            className="radio"
+          />
           <label>Income</label>
         </div>
       </div>
@@ -47,9 +62,12 @@ function Navbar({setSearch, search ,setType}) {
 
       <ul className="flex flex-col gap-2">
         {category.map((item) => (
-          <div key={item._id} className="flex items-center gap-2">
+          <div key={crypto.randomUUID()} className="flex items-center gap-2">
             <Image src="/eyeOff.svg" alt="eye" width={25} height={25} />
-            <li className="text-lg cursor-pointer hover:text-gray-500">
+            <li
+              className="text-lg cursor-pointer hover:text-gray-500 "
+              onClick={() => setCategorySort(item.name)}
+            >
               {item.name}
             </li>
           </div>

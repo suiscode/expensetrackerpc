@@ -18,27 +18,24 @@ function SignupForm() {
       return;
     }
     try {
-      const response = await axios.post("/api/signup/init", {
+      const response = await axios.put("/api/signup", {
         name: credential.name,
         email: credential.email,
         password: credential.password,
       });
-      if (response.data == "Email already exists") {
-        setError(response.data);
-        setIsSubmitting(false);
-
-        return;
-      } else {
-        setStage(1);
-        setIsSubmitting(false);
-      }
+      console.log(response.data);
+      setStage(1);
+      setIsSubmitting(false);
     } catch (error) {
-      console.error("Signup failed:", error);
+      setError(error.response.data.error);
     }
   };
 
   return (
-    <form className="flex flex-col items-center gap-4 w-full" onSubmit={handleSubmit}>
+    <form
+      className="flex flex-col items-center gap-4 w-full"
+      onSubmit={handleSubmit}
+    >
       <input
         value={credential.name}
         required
@@ -79,7 +76,7 @@ function SignupForm() {
         placeholder="Re-password"
         className="input input-bordered w-full bg-gray-100"
       />
-      {error &&<h1 className="text-red-400">{error}</h1>}
+      {error && <h1 className="text-red-400">{error}</h1>}
       <Button label={"Sign up"} />
     </form>
   );

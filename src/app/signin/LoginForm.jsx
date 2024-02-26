@@ -14,17 +14,16 @@ function LoginForm() {
   const handleClick = async (e) => {
     e.preventDefault();
     setLoading(true);
-    const response = await axios.post("/api/signin", {
-      email: signIn.email,
-      password: signIn.password,
-    });
-    setLoading(false);
-    if (response.data === "Email does not exist") {
-      setError("Email or password is wrong");
+    try {
+      const response = await axios.post("/api/signin", {
+        email: signIn.email,
+        password: signIn.password,
+      });
       setLoading(false);
-    } else {
       router.push("/dashboard");
+    } catch (e) {
       setLoading(false);
+      setError(e.response.data.error);
     }
   };
 

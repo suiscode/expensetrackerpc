@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import Button from "../Button";
 import Title from "./Title";
 import IeToggler from "./IeToggler";
@@ -29,12 +29,12 @@ function AddRecord({ setRecordState }) {
     console.log(`${date}T${time}:00`,);
     const response = await axios.post("/api/transactions/", {
       ...recordData,
-      userId: user._id,
+      userId: user.id,
       date:`${date}T${time}`
     });
     setRecordData({
       type: "Expense",
-      amount: "",
+      amount: 0,
       category: "",
       date: "",
       payee: "",
@@ -45,7 +45,7 @@ function AddRecord({ setRecordState }) {
   };
 
   useEffect(()=>{
-    console.log(recordData);
+console.log(recordData);
   },[recordData])
 
   return (

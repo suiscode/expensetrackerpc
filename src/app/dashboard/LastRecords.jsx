@@ -16,6 +16,8 @@ function LastRecords({ transactions }) {
     return dateTimeB - dateTimeA;
   });
 
+  console.log(transactions);
+
   return (
     <div className="flex flex-col rounded-xl w-full bg-white">
       <div className="border-b-[2px] flex items-center gap-2 py-4 px-6">
@@ -55,7 +57,7 @@ function LastRecords({ transactions }) {
             }
             return (
               <li
-                key={item._id}
+                key={item.id}
                 className="flex w-full py-5 justify-between items-center border-b-2"
               >
                 <div className="flex items-center gap-4">
@@ -65,7 +67,7 @@ function LastRecords({ transactions }) {
                     } p-2 rounded-full`}
                   >
                     {category
-                      .filter((categ) => categ._id === item.category)
+                      .filter((categ) => categ.id == item.category)
                       .map((filteredCategory) => (
                         <Image
                         key={crypto.randomUUID()}
@@ -79,9 +81,9 @@ function LastRecords({ transactions }) {
                   <div className="flex flex-col gap-2">
                     <h1>
                       {category
-                        .filter((categ) => categ._id === item.category)
+                        .filter((categ) => categ.id == item.category)
                         .map((filteredCategory) => (
-                          <span key={filteredCategory._id}>
+                          <span key={crypto.randomUUID()}>
                             {filteredCategory.name}
                           </span>
                         ))}

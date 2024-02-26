@@ -7,7 +7,10 @@ function Amount({ recordData, setRecordData }) {
       <input
         value={recordData.amount}
         onChange={(e) =>
-          setRecordData((prev) => ({ ...prev, amount: e.target.value }))
+          setRecordData((prev) => ({
+            ...prev,
+            amount:e.target.value,
+          }))
         }
         required
         placeholder="$ 000.00"

@@ -1,16 +1,13 @@
-import { User } from "@/lib/models";
-import { connectDB } from "@/lib/utils";
 import "dotenv/config";
 import jwt from "jsonwebtoken";
 import { NextResponse } from "next/server";
+import { sql } from "@vercel/postgres";
 
 export async function GET(req) {
-  connectDB();
+  // await sql`SELECT * FROM users WHERE email = ${body.email};`;
   const token = req.cookies.get("cookie").value;
   const { id } = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
-
-  const user = await User.findById(id);
-
-  return NextResponse.json({ user: user });
+  const users = await sql`SELECT * FROM users WHERE id = ${id}`
+  return NextResponse.json({ user: users.rows[0] });
 }
 
