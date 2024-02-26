@@ -3,7 +3,7 @@ import Header from "@/components/Header";
 import React from "react";
 import { useGlobalContext } from "../context/Context";
 
-function page() {
+function Profile() {
     const {user} = useGlobalContext()
   return (
     <div className="flex flex-col items-center bg-slate-100">
@@ -16,4 +16,4 @@ function page() {
   );
 }
 
-export default page;
+export default Profile;

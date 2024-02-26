@@ -4,7 +4,7 @@ import React from "react";
 function LoginLink() {
   return (
     <h1 className="font-semibold">
-      Don't have account?{" "}
+      Don&apos;t have account?
       <Link className="text-primary" href="/signup">
         Sign up
       </Link>
