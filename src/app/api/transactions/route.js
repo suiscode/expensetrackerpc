@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 import { sql } from "@vercel/postgres";
+import { query } from "express";
 
 export async function POST(request) {
   const body = await request.json();
@@ -27,25 +28,24 @@ export async function POST(request) {
 
 export async function GET(req) {
   try {
-    const typeParam = req.nextUrl.searchParams.get("type");
+    const type = req.nextUrl.searchParams.get("type");
     const sortParam = req.nextUrl.searchParams.get("sort");
     const cookieStore = cookies();
     const token = cookieStore.get("cookie").value;
     const { id } = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
-    let typeCondition = "";
+    const sort = sortParam === "Latest" ? "date" : "amount";
 
-    if (typeParam === "Expense" || typeParam === "Income") {
-      typeCondition = `AND type = ${sql.literal(typeParam)}`;
+    let query;
+    const params = [id];
+
+    if (type === "Expense" || type === "Income") {
+      query = `SELECT * FROM transactions WHERE user_id = $1 AND type = $2 ORDER BY ${sort} DESC`;
+      params.push(type);
+    } else {
+      query = `SELECT * FROM transactions WHERE user_id = $1 ORDER BY ${sort} DESC`;
     }
 
-    // if (type === "Expense" || type === "Income") {
-    //   query = sql`SELECT * FROM transactions WHERE user_id = ${id} AND type = ${type} `;
-    // } else {
-    //   query = sql`SELECT * FROM transactions WHERE user_id = ${id}`;
-    // }
-
-    const { rows } =
-      await sql`SELECT * FROM transactions WHERE user_id = ${id}`;
+    const { rows } = await sql.query(query, params);
 
     return NextResponse.json({ data: rows });
   } catch (error) {
