@@ -9,7 +9,15 @@ import axios from "axios";
 
 function Header() {
   const router = useRouter();
-  const { setRecordState, recordState, user, setUser, setCategory,refresh,setRefresh } = useGlobalContext();
+  const {
+    setRecordState,
+    recordState,
+    user,
+    setUser,
+    setCategory,
+    refresh,
+    setRefresh,
+  } = useGlobalContext();
   const [loading, setLoading] = useState(true);
   const params = usePathname();
   const logOut = async () => {
@@ -91,8 +99,8 @@ function Header() {
         </div>
       </div>
       <dialog id="my_modal_3" className="modal">
-        <div className="modal-box flex flex-col max-w-[45%]">
-          <AddRecord/>
+        <div className="modal-box flex flex-col max-w-[45%] overscroll-none border-2 border-red-200">
+          <AddRecord />
         </div>
         <form method="dialog" className="modal-backdrop">
           <button>close</button>

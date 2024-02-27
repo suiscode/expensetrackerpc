@@ -53,7 +53,7 @@ function AddCategory() {
           className={` bg-green-600 text-white
             rounded-3xl h-12 `}
         >
-          Add Record
+          Add Category
         </button>
       </form>
     </div>

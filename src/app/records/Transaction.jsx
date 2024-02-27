@@ -3,6 +3,7 @@ import React from 'react'
 
 
 function Transaction({item, category}) {
+  console.log(category, 'HAHHAA');
   return (
     <li
               key={item._id}
