@@ -6,7 +6,6 @@ import Image from "next/image";
 
 function Navbar({ setSearch, search, setType, categorySort, setCategorySort }) {
   const { category, setCategory } = useGlobalContext();
-
   return (
     <div className="flex px-4 py-6 flex-col w-[282px] gap-6 h-[1200px] bg-white rounded-xl border-[1px] ">
       <h1 className="text-2xl font-semibold ">Records</h1>
@@ -73,7 +72,6 @@ function Navbar({ setSearch, search, setType, categorySort, setCategorySort }) {
           </div>
         ))}
       </ul>
-
       <button
         className="btn"
         onClick={() => document.getElementById("my_modal_2").showModal()}
@@ -81,7 +79,7 @@ function Navbar({ setSearch, search, setType, categorySort, setCategorySort }) {
         Add category
       </button>
       <dialog id="my_modal_2" className="modal">
-        <div className="modal-box max-w-[30%] flex">
+        <div className="modal-box max-w-[30%] h-[500px] flex">
           <AddCategory />
         </div>
         <form method="dialog" className="modal-backdrop">

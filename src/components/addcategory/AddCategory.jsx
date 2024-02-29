@@ -10,6 +10,7 @@ function AddCategory() {
   const [category, setCategory] = useState({
     name: "",
     img: "/house.svg",
+    color:""
   });
   const [error, setError] = useState("");
 
@@ -22,6 +23,7 @@ function AddCategory() {
       setCategory({
         name: "",
         img: "/house.svg",
+        img: "",
       });
       setRefresh(false);
     } catch (e) {
